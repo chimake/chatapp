@@ -186,23 +186,16 @@ function loadMessages(userId) {
         var timeStamp = timeSince(new Date(chatTime));;
 
         //console.log("Message: "+message.displayName);
-        if (message.displayName === 'Plus Life') {
+        if (message.displayName === '+LiFE') {
           //display chat bot
-            
-           // var msgHTML = displayChat(change.key,message.user,message.displayName,image,message.photoUrl,timeStamp,message.messageText);
-           //  messageListElement.append(msgHTML);
             displayMessage(change.key, message.time, message.displayName,
               message.messageText, image, message.photoUrl, message.user);
         } else {
-          var ref = firebase.database().ref('users/'+ message.displayName);
+          var ref = firebase.database().ref('user/'+ message.displayName);
           ref.once('value').then(function (snapshot) {
              image = snapshot.child("userImage").val();
-              // var msgHTML = displayChat(change.key,message.user,message.displayName,image,message.photoUrl,timeStamp,message.messageText);
               displayMessage(change.key, message.time, message.displayName,
                   message.messageText, image, message.photoUrl, message.user);
-              //messageListElement.append(msgHTML);
-              //console.log("Snapshot: "+userImage);
-
           });
 
 
@@ -343,7 +336,6 @@ function saveImageMessage(file) {
 function saveMessagingDeviceToken() {
   firebase.messaging().getToken().then(function(currentToken) {
     if (currentToken) {
-      // console.log('Got FCM device token:', currentToken);
       // Saving the Device Token to the datastore.
       firebase.database().ref('fcmTokens').child(currentToken)
           .set({uid: firebase.auth().currentUser.uid});
@@ -459,32 +451,7 @@ function checkSignedInWithMessage() {
 var RECIEVED_MESSAGE_TEMPLATE = `<div class="ca-send">
                                                     <div class="ca-send__msg-group">
                                                         <div class="ca-send__msgwrapper">
-                                                            <div class="ca-msg-actions">
-                                                                <div class="iconbox-dropdown dropdown">
-                                                                    <div class="iconbox btn-hovered-light" id="dropdownMenuButtons1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="iconbox__icon mdi mdi-dots-horizontal"></i>
-                                                                    </div>
-                                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButtons1">
-                                                                        
-                                                                        <a class="dropdown-item" href="javascript:;">
-                                                                            <span><i class="mdi mdi-share-outline"></i></span> 
-                                                                            <span>Forward</span>
-                                                                        </a>
-                                                                        <a class="dropdown-item" href="javascript:;">
-                                                                            <span><i class="mdi mdi-content-copy"></i></span> 
-                                                                            <span>Copy</span>
-                                                                        </a>
-                                                                        <a class="dropdown-item" href="javascript:;">
-                                                                            <span><i class="mdi mdi-star-outline"></i></span> 
-                                                                            <span>Add Star</span>
-                                                                        </a>
-                                                                        <a class="dropdown-item" href="javascript:;">
-                                                                            <span><i class="mdi mdi-trash-can-outline"></i></span> 
-                                                                            <span>Delete</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            
                                                             <div class="ca-send__msg message"></div>
                                                         </div>
                                                         <div class="metadata">
@@ -506,33 +473,7 @@ var SENT_MESSAGE_TEMPLATE = `<div class="ca-received">
     </div>
     <div class="ca-received__msg-group">
         <div class="ca-received__msgwrapper">
-            <div class="ca-received__msg message"></div>
-            <div class="ca-msg-actions">
-                <div class="iconbox-dropdown dropdown">
-                    <div class="iconbox btn-hovered-light" id="dropdownMenuButtonsr1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="iconbox__icon mdi mdi-dots-horizontal"></i>
-                    </div>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonsr1">
-
-                        <a class="dropdown-item" href="javascript:;">
-                            <span><i class="mdi mdi-share-outline"></i></span>
-                            <span>Forward</span>
-                        </a>
-                        <a class="dropdown-item" href="javascript:;">
-                            <span><i class="mdi mdi-content-copy"></i></span>
-                            <span>Copy</span>
-                        </a>
-                        <a class="dropdown-item" href="javascript:;">
-                            <span><i class="mdi mdi-star-outline"></i></span>
-                            <span>Add Star</span>
-                        </a>
-                        <a class="dropdown-item" href="javascript:;">
-                            <span><i class="mdi mdi-trash-can-outline"></i></span>
-                            <span>Delete</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <div class="ca-received__msg message"></div>           
         </div>
         <div class="metadata">
             <span class="time name hideName"></span> - <span class="time msgTime"></span> <span class="time"> ago</span> 
@@ -669,6 +610,12 @@ var timeSince = function(date) {
 function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
   //console.log(id)
   var div = document.getElementById(id) || createAndInsertMessage(id, timestamp, sender);
+
+  var eventVal = "loadMessages('"+sender+"')";
+    if (getUid() != sender)
+    {
+        div.querySelector('.hideSender').setAttribute('onclick',eventVal);
+    }
 // console.log("Chat List: "+div)
   // profile picture
   if (!picUrl) {
@@ -676,6 +623,7 @@ function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
 
   }
     div.querySelector('.pic').setAttribute('src',picUrl);
+
   div.querySelector('.name').textContent = name;
   var messageElement = div.querySelector('.message');
   var time = div.getAttribute('timestamp');
@@ -690,7 +638,9 @@ function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
     messageElement.textContent = text;
     // Replace all line breaks by <br>.
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
+
   } else if (photoUrl) { // If the message is an image.
+
     let image = document.createElement('div');
       if (getUid() === sender){
           image.innerHTML = SENT_IMAGE_MESSAGE_TEMPLATE;
@@ -873,16 +823,6 @@ mediaCaptureElement.change(function () {
     onMediaFileSelected();
 });
 
-// var firebaseConfig = {
-//     apiKey: "AIzaSyCSn0UKmK1g0AhUhl6_88YsYhW2RX-dY_Y",
-//     authDomain: "lifedev-51c6f.firebaseapp.com",
-//     databaseURL: "https://lifedev-51c6f.firebaseio.com",
-//     projectId: "lifedev-51c6f",
-//     storageBucket: "lifedev-51c6f.appspot.com",
-//     messagingSenderId: "959151590680",
-//     appId: "1:959151590680:web:6a7539cf0836943794a26d"
-// };
-// firebase.initializeApp(firebaseConfig);
 
 // initialize Firebase
 initFirebaseAuth();
