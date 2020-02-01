@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Chat free on PlusLife">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pluslife</title>
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="PlusLife Web">
+  <meta name="theme-color" content="#303F9F">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PlusLife Web">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+  <!-- Tile icon for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-navbutton-color" content="#303F9F">
+
+  <!-- Flingo CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Archivo:400,400i,500,500i,600,700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/fonts/MaterialDesign/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="styles/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="styles/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="styles/vendors/OwlCarousel2/owl.carousel.css">
+    <link rel="stylesheet" href="styles/vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/app.css">
+
+    <link rel="stylesheet" href="styles/theme/default.css">
+
+  <!-- TODO: Enable First Input Delay polyfill library. -->
+  <!--  <script type="text/javascript">!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script> -->
+    <style>
+        .modal-backdrop {
+
+            background: url('images/parallax-2.jpg') no-repeat scroll center bottom -120px / 100% auto;
+
+        }
+
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: -140px;
+            border: solid 1px #4db85f;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            z-index: 9999999;
+        }
+
+        .login,
+        .image {
+            min-height: 100vh;
+        }
+
+        .bg-image {
+        //background-image: url('image/text.png');
+            background-size: cover;
+            background-position: center center;
+        }
+    </style>
+</head>
+<body class="dark-default-theme">
+
+
+    <div class="container-fluid" hidden id="main-container">
+        <div class="ca-main-conatiner">
+            <div class="ca-main-wrapper">
+                <div class="ca-sidebar-wrapper">
+                    <div class="ca-sidebar">
+                        <div class="ca-sidebar__header">
+                            <div class="ca-userprofile" data-toggle="modal" data-target="#viewProfileModal">
+                                <a href="javascript:;" class="user-avatar user-avatar-rounded">
+                                    <img src="" alt="Profile Picture" class="display_pic">
+                                    <input type="hidden" id="senderId">
+                                </a>
+                            </div>
+                            <div class="iconbox-group">
+
+                                <div class="iconbox iconbox-search btn-hovered-light">
+                                    <i class="iconbox__icon mdi mdi-magnify"></i>
+                                </div>
+
+                                <div class="iconbox btn-hovered-light">
+                                    <i class="iconbox__icon mdi mdi-bell-outline"></i>
+                                </div>
+
+                                <div class="iconbox-dropdown dropdown">
+                                    <div class="iconbox btn-hovered-light" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="iconbox__icon mdi mdi-dots-horizontal"></i>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="javascript:;">
+                                            <span><i class="mdi mdi-star-outline"></i></span>
+                                            <span>Starred Messages</span>
+                                        </a>
+                                        <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#invitePeopleModal">
+                                            <span><i class="mdi mdi-account-multiple-plus-outline"></i></span>
+                                            <span>Invite People</span>
+                                        </a>
+
+                                        <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#settingsModalCenter">
+                                            <span><i class="mdi mdi-settings-outline"></i></span>
+                                            <span>Settings</span>
+                                        </a>
+
+                                        <a class="dropdown-item" href="javascript:;">
+                                            <span><i class="mdi mdi-help-circle-outline"></i></span>
+                                            <span>Help</span>
+                                        </a>
+                                        <a class="dropdown-item" href="javascript:;">
+                                            <span><i class="mdi mdi-comment-quote-outline"></i></span>
+                                            <span>Feedback</span>
+                                        </a>
+                                        <a class="dropdown-item" id="sign-out" href="javascript:;">
+                                            <span><i class="mdi mdi-logout"></i></span>
+                                            <span>Logout</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="iconbox-searchbar">
+                                <form>
+                                    <input type="text" class="form-control" placeholder="Search here..." autofocus>
+
+                                    <button class="search-submit" type="submit">
+                                        <i class="mdi mdi-magnify"></i>
+                                    </button>
+                                    <a href="javascript:void(0)" class="search-close">
+                                        <i class="mdi mdi-arrow-left"></i>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="ca-sidebar__body">
+                            <div class="ca-navigation-tabs">
+                                <div class="nav-style-1">
+                                    <ul class="nav" id="caMainTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="caUsersTab" data-toggle="pill" href="#caUsers" role="tab" aria-controls="caUsers" aria-selected="false">
+                                                <span class="mdi mdi-account-box-outline"></span>
+                                                <span>Users</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="caChatsTab" data-toggle="pill" href="#personal-chat" aria-controls="personal-chat" aria-selected="false">
+                                                <span class="mdi mdi-message-text"></span>
+                                                <span>Chats</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" onclick="loadMessages()" id="caDiscoverTab">
+                                                <span class="mdi mdi-earth"></span>
+                                                <span>Discover</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content" id="caMainTabContent">
+
+
+
+                                        <div class="tab-pane fade show active" id="personal-chat" role="tabpanel" aria-labelledby="personal-chat-tab">
+                                            <div class="sidebar-userlist">
+                                                <ul class="list-unstyled" id="chatList">
+
+
+
+                                                </ul>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade position-relative" id="caUsers" role="tabpanel" aria-labelledby="caUsersTab">
+                                            <div class="sidebar-contactlist">
+                                                <ul class="list-unstyled" id="children">
+
+
+                                                </ul>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <ul id="mfbMenu" class="mfb-component--br mfb-slidein" data-mfb-toggle="click">
+                                    <li class="mfb-component__wrap">
+                                        <a href="#" class="mfb-component__button--main">
+                                            <i class="mfb-component__main-icon--resting mdi mdi-plus ion-plus-round"></i>
+                                            <i class="mfb-component__main-icon--active mdi mdi-close ion-close-round"></i>
+                                        </a>
+                                        <ul class="mfb-component__list">
+                                            <li>
+                                                <a href="javascript:;"
+                                                   data-mfb-label="Theme" class="mfb-component__button--child">
+                                                    <i class="mfb-component__child-icon mdi mdi-palette"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="javascript:;"  data-toggle="modal" data-target="#newGroupModal" data-mfb-label="Create Group" class="mfb-component__button--child">
+                                                    <i class="mfb-component__child-icon mdi mdi-account-group"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="javascript:;" data-toggle="modal" data-target="#newCallModal" data-mfb-label="New Call" class="mfb-component__button--child">
+                                                    <i class="mfb-component__child-icon mdi mdi-phone"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="javascript:;" data-toggle="modal" data-target="#newMsgModal" data-mfb-label="New Chat" class="mfb-component__button--child">
+                                                    <i class="mfb-component__child-icon mdi mdi-android-messages"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ca-content-wrapper">
+                    <div class="ca-content">
+                        <div class="ca-content__chatstab">
+                            <div class="ca-content__chatstab--personal">
+                                <div class="conversation-wrapper">
+                                    <div class="conversation-panel">
+                                        <div class="conversation-panel__head">
+                                            <div class="conversation-panel__back-button ">
+                                                <i class="mdi mdi-arrow-left"></i>
+                                            </div>
+
+                                            <div class="conversation-panel__avatar personalinfo-panel-opener">
+                                                <div class="user-avatar user-avatar-rounded">
+                                                    <img src="" id="pic" alt="">
+                                                </div>
+                                                <div class="conversation__name">
+                                                    <div class="conversation__name--title" id="name"></div>
+                                                    <div class="conversation__time" id="details"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="conversation-panel__body bg2">
+                                            <div class="container">
+                                                <div class="chatstyle-01" id="messages">
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="conversation-panel__footer" id="input-area">
+                                            <div class="composer">
+                                                <div class="composer__left">
+                                                    <div class="composer__left--emoticon">
+                                                        <i class="mdi mdi-emoticon-outline"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="composer__middle">
+                                                    <textarea class="form-control" id="message" rows="1" placeholder="Type a message..."></textarea>
+
+                                                    <div class="composer__middle--microphone">
+                                                        <i class="mdi mdi-microphone"></i>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="composer__right">
+                                                    <div class="composer__right--send" id="msg-btn">
+                                                        <i class="mdi mdi-send"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="information-panel personal-information-panel">
+                                        <div class="information-panel__head">
+                                            <h5>Contact info</h5>
+                                            <div class="information-panel__closer">
+                                                <i class="mdi mdi-close"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="information-panel__body">
+                                            <div class="userprofile-avatar">
+                                                <img class="img-fluid" src="assets/images/user/250/01.jpg" alt="">
+                                            </div>
+
+                                            <div class="userprofile-name">
+                                                <h4>Jack P. Angulo</h4>
+                                                <span>Product Manager</span>
+                                                <div class="social-icon-box">
+                                                    <div class="social-icon">
+                                                        <i class="mdi mdi-facebook"></i>
+                                                    </div>
+                                                    <div class="social-icon">
+                                                        <i class="mdi mdi-linkedin"></i>
+                                                    </div>
+                                                    <div class="social-icon">
+                                                        <i class="mdi mdi-twitter"></i>
+                                                    </div>
+                                                    <div class="social-icon">
+                                                        <i class="mdi mdi-youtube"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <table class="table table-sm table-borderless user-table-info">
+                                                <tr>
+                                                    <td><i class="mdi mdi-cellphone-android"></i></td>
+                                                    <td>+91 99041-99041</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="mdi mdi-web"></i></td>
+                                                    <td>www.jackangulo.com</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><i class="mdi mdi-map-marker"></i></td>
+                                                    <td>2519  Burnside Court, HORICON, WI, 53032</td>
+                                                </tr>
+                                            </table>
+
+                                            <hr>
+
+                                            <div class="accordion accordion-ungrouped mb-3" id="accordionExample">
+                                                <div class="card">
+                                                    <div class="card-header" id="headingOne">
+                                                        <div class="card-title" data-toggle="collapse" role="button"  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <div class="acpanel__heading">
+                                                                <div class="acpanel__left">
+                                                                    <span><i class="mdi mdi-camera-outline"></i></span>
+                                                                    <span>Photos & Media</span>
+                                                                </div>
+                                                                <div class="acpanel__right">
+                                                                    <span class="badge badge-info">26</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                        <div class="card-body">
+                                                            <div class="owl-carousel">
+                                                                <div class="item">
+                                                                    <img class="img-fluid" src="assets/images/media/01.jpg" alt="">
+                                                                </div>
+                                                                <div class="item">
+                                                                    <img class="img-fluid" src="assets/images/media/02.jpg" alt="">
+                                                                </div>
+                                                                <div class="item">
+                                                                    <img class="img-fluid" src="assets/images/media/03.jpg" alt="">
+                                                                </div>
+                                                                <div class="item">
+                                                                    <img class="img-fluid" src="assets/images/media/04.jpg" alt="">
+                                                                </div>
+                                                                <div class="item">
+                                                                    <img class="img-fluid" src="assets/images/media/05.jpg" alt="">
+                                                                </div>
+                                                                <div class="item">
+                                                                    <img class="img-fluid" src="assets/images/media/06.jpg" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="headingTwo">
+                                                        <div class="card-title collapsed d-flex justify-content-between align-items-center"  role="button" data-toggle="collapse" data-target="#collapseTwo"
+                                                             aria-expanded="false" aria-controls="collapseTwo">
+                                                            <div class="acpanel__heading">
+                                                                <div class="acpanel__left">
+                                                                    <span><i class="mdi mdi-file-document-outline"></i></span>
+                                                                    <span>Documents</span>
+                                                                </div>
+                                                                <div class="acpanel__right">
+                                                                    <span class="badge badge-info">16</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                        <div class="card-body">
+                                                            <ul class="list-unstyled documentlist-wrapper">
+                                                                <li>
+                                                                    <div class="doclist">
+                                                                        <div class="docicon">
+                                                                            <img src="assets/images/svg/pdf.svg" alt="">
+                                                                        </div>
+                                                                        <div class="doctitle">
+                                                                            <div class="docname">example-file.pdf</div>
+                                                                            <div class="docsize">217kb</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="doclist">
+                                                                        <div class="docicon">
+                                                                            <img src="assets/images/svg/word.svg" alt="">
+                                                                        </div>
+                                                                        <div class="doctitle">
+                                                                            <div class="docname">example-file.docs</div>
+                                                                            <div class="docsize">217kb</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="doclist">
+                                                                        <div class="docicon">
+                                                                            <img src="assets/images/svg/excel.svg" alt="">
+                                                                        </div>
+                                                                        <div class="doctitle">
+                                                                            <div class="docname">example-file.xlxs</div>
+                                                                            <div class="docsize">217kb</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="doclist">
+                                                                        <div class="docicon">
+                                                                            <img src="assets/images/svg/powerpoint.svg" alt="">
+                                                                        </div>
+                                                                        <div class="doctitle">
+                                                                            <div class="docname">example-file.pptx</div>
+                                                                            <div class="docsize">217kb</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="doclistall">View All</div>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="headingFour">
+                                                        <div class="card-title collapsed  d-flex justify-content-between align-items-center" role="button"  data-toggle="collapse" data-target="#collapseFour"
+                                                             aria-expanded="false" aria-controls="collapseFour">
+                                                            <div class="acpanel__heading">
+                                                                <div class="acpanel__left">
+                                                                    <span><i class="mdi mdi-settings-outline"></i></span>
+                                                                    <span>Settings</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                                        <div class="card-body">
+
+                                                            <ul class="list-unstyled">
+                                                                <li>
+                                                                    <div class="setting-list">
+                                                                        <div class="setting-list-name">Media Auto Download</div>
+                                                                        <div class="setting-list-switch">
+                                                                            <label class="material-switch">
+                                                                                <input type="checkbox">
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="setting-list">
+                                                                        <div class="setting-list-name">Mute Conversation</div>
+                                                                        <div class="setting-list-switch">
+                                                                            <label class="material-switch">
+                                                                                <input type="checkbox">
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="setting-list">
+                                                                        <div class="setting-list-name">Notifications</div>
+                                                                        <div class="setting-list-switch">
+                                                                            <label class="material-switch">
+                                                                                <input type="checkbox">
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="setting-list">
+                                                                        <div class="setting-list-name">Block</div>
+                                                                        <div class="setting-list-switch">
+                                                                            <label class="material-switch">
+                                                                                <input type="checkbox">
+                                                                                <span></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="ca-content__contactstab">
+                            <div class="container">
+                                <div class="conversation-panel__back-button back2contacts">
+                                    <i class="mdi mdi-arrow-left"></i>
+                                    <span>Back</span>
+                                </div>
+                                <div class="ca-profile-thumb" style="background-image: url(images/media/07.jpg);">
+
+                                    <div class="ca-profile-info">
+                                        <div class="ca-profile-pic"><img class="img-fluid" src="assets/images/user/500/09.jpg" alt=""></div>
+                                    </div>
+                                    <div class="ca-profile-actions">
+                                        <div class="iconbox-group">
+                                            <div class="iconbox btn-hovered-light">
+                                                <i class="iconbox__icon mdi mdi-star-outline"></i>
+                                            </div>
+                                            <div class="iconbox btn-hovered-light">
+                                                <i class="iconbox__icon mdi mdi-pencil-outline"></i>
+                                            </div>
+                                            <div class="iconbox btn-hovered-light">
+                                                <i class="iconbox__icon mdi mdi-dots-horizontal"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ca-overlay"></div>
+                                </div>
+
+                                <div class="profile-settings-list border mb-5">
+                                    <div class="ca-profile-title">
+                                        <h2 class="ca-profile-name">Pearl Villarreal</h2>
+                                        <div class="ca-profile-tag">
+                                            <span>Co-Workers</span>
+                                        </div>
+                                        <div class="ca-contcat-profile__calling-buttons pt-2">
+
+                                            <div class="iconbox iconbox-pill btn-outline-light">
+                                                <i class="iconbox__icon mdi mdi-message-text-outline"></i>
+                                                <span>Message</span>
+                                            </div>
+                                            <div class="iconbox iconbox-pill btn-outline-light">
+                                                <i class="iconbox__icon mdi mdi-phone"></i>
+                                                <span>Voice Call</span>
+                                            </div>
+                                            <div class="iconbox iconbox-pill btn-outline-light">
+                                                <i class="iconbox__icon mdi mdi-video-outline"></i>
+                                                <span>Video Call</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="setting-sunheading  setting-sunheading-style01  my-3">Personal & Contact Information</div>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-account-heart-outline"></i></div>
+                                                    <div class="ps-list__left--name">Nick name</div>
+                                                </div>
+                                                <div class="ps-list__right">Eva</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-gender-male-female"></i></div>
+                                                    <div class="ps-list__left--name">Gender</div>
+                                                </div>
+                                                <div class="ps-list__right">Female</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-cake"></i></div>
+                                                    <div class="ps-list__left--name">Birth date</div>
+                                                </div>
+                                                <div class="ps-list__right">20/12/2016</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-cellphone-android"></i></div>
+                                                    <div class="ps-list__left--name">Mobile number</div>
+                                                </div>
+                                                <div class="ps-list__right">+01 369 2015</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-email-outline"></i></div>
+                                                    <div class="ps-list__left--name">Email</div>
+                                                </div>
+                                                <div class="ps-list__right">earnest.clements@email.com</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list border-bottom-0">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-at"></i></div>
+                                                    <div class="ps-list__left--name">Website</div>
+                                                </div>
+                                                <div class="ps-list__right">www.earnestclements.com</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+
+                                    <div class="setting-sunheading setting-sunheading-style01 my-4">Social Network</div>
+
+
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-facebook"></i></div>
+                                                    <div class="ps-list__left--name">Facebook</div>
+                                                </div>
+                                                <div class="ps-list__right">earnest.clements</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-instagram"></i></div>
+                                                    <div class="ps-list__left--name">Instagram</div>
+                                                </div>
+                                                <div class="ps-list__right">earnest_clements</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-snapchat"></i></div>
+                                                    <div class="ps-list__left--name">Snapchat</div>
+                                                </div>
+                                                <div class="ps-list__right">earnestclements212</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list border-bottom-0">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-twitter"></i></div>
+                                                    <div class="ps-list__left--name">Twitter</div>
+                                                </div>
+                                                <div class="ps-list__right">iamearnest</div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW PROFILE MODAL -->
+                <div class="modal profile-dialog" id="viewProfileModal" tabindex="-1" role="dialog" aria-labelledby="viewProfileModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="back2homepage" data-dismiss="modal">
+                                    <i class="mdi mdi-arrow-left"></i>
+                                    <span>Back</span>
+                                </div>
+                                <div class="profile-modal-close" data-dismiss="modal">
+                                    <i class="mdi mdi-close"></i>
+                                </div>
+                            </div>
+                            <div class="modal-body p-0">
+                                <div class="ca-profile-thumb" style="background-image: url(assets/images/media/07.jpg);">
+                                    <div class="ca-profile-info">
+                                        <div class="ca-profile-pic"><img class="img-fluid" src="assets/images/user/500/01.jpg" alt=""></div>
+                                        <div class="ca-profile-title">
+                                            <h2 class="ca-profile-name">Earnest Clements</h2>
+                                        </div>
+                                    </div>
+                                    <div class="ca-profile-actions">
+                                        <div class="iconbox-group">
+                                            <div class="iconbox btn-hovered-light">
+                                                <i class="iconbox__icon mdi mdi-pencil-outline"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ca-overlay"></div>
+                                </div>
+
+                                <div class="profile-settings-list">
+                                    <div class="setting-sunheading pl-2">Personal & Contact Information</div>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-gender-male-female"></i></div>
+                                                    <div class="ps-list__left--name">Gender</div>
+                                                </div>
+                                                <div class="ps-list__right">Female</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-cake"></i></div>
+                                                    <div class="ps-list__left--name">Birth date</div>
+                                                </div>
+                                                <div class="ps-list__right">20/12/2016</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-cellphone-android"></i></div>
+                                                    <div class="ps-list__left--name">Mobile number</div>
+                                                </div>
+                                                <div class="ps-list__right">+01 369 2015</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-email-outline"></i></div>
+                                                    <div class="ps-list__left--name">Email</div>
+                                                </div>
+                                                <div class="ps-list__right">earnest.clements@email.com</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-at"></i></div>
+                                                    <div class="ps-list__left--name">Website</div>
+                                                </div>
+                                                <div class="ps-list__right">www.earnestclements.com</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="setting-sunheading pl-2 py-4">Social Network</div>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-facebook"></i></div>
+                                                    <div class="ps-list__left--name">Facebook</div>
+                                                </div>
+                                                <div class="ps-list__right">earnest.clements</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-instagram"></i></div>
+                                                    <div class="ps-list__left--name">Instagram</div>
+                                                </div>
+                                                <div class="ps-list__right">earnest_clements</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-snapchat"></i></div>
+                                                    <div class="ps-list__left--name">Snapchat</div>
+                                                </div>
+                                                <div class="ps-list__right">earnestclements212</div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ps-list">
+                                                <div class="ps-list__left">
+                                                    <div class="ps-list__left--icon"><i class="mdi mdi-twitter"></i></div>
+                                                    <div class="ps-list__left--name">Twitter</div>
+                                                </div>
+                                                <div class="ps-list__right">iamearnest</div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- THEME CUSTOMIZER -->
+                <div class="theme-customizer">
+                    <div class="theme-customizer-opener">
+                        <i class="theme-customizer-icon mdi mdi-settings"></i>
+                    </div>
+
+                    <div class="theme-customizer-content">
+                        <h6 class="border-bottom pb-2">Light Theme</h6>
+                        <a href="javascript:;" data-theme="light-default-theme" class="theme default-theme"></a>
+                        <a href="javascript:;" data-theme="light-purple-theme" class="theme purple-theme"></a>
+                        <a href="javascript:;" data-theme="light-pink-theme" class="theme pink-theme"></a>
+                        <a href="javascript:;" data-theme="light-green-theme" class="theme green-theme"></a>
+                        <a href="javascript:;" data-theme="light-red-theme" class="theme red-theme"></a>
+                        <a href="javascript:;" data-theme="light-orange-theme" class="theme orange-theme"></a>
+                        <a href="javascript:;" data-theme="light-blue-theme" class="theme blue-theme"></a>
+                        <a href="javascript:;" data-theme="light-darkblue-theme" class="theme darkblue-theme"></a>
+                        <a href="javascript:;" data-theme="light-lightpink-theme" class="theme lightpink-theme"></a>
+
+                        <h6 class="border-bottom py-3">Dark Theme</h6>
+                        <a href="javascript:;" data-theme="dark-default-theme" class="theme default-theme selected"></a>
+                        <a href="javascript:;" data-theme="dark-purple-theme" class="theme purple-theme"></a>
+                        <a href="javascript:;" data-theme="dark-pink-theme" class="theme pink-theme"></a>
+                        <a href="javascript:;" data-theme="dark-green-theme" class="theme green-theme"></a>
+                        <a href="javascript:;" data-theme="dark-red-theme" class="theme red-theme"></a>
+                        <a href="javascript:;" data-theme="dark-orange-theme" class="theme orange-theme"></a>
+                        <a href="javascript:;" data-theme="dark-blue-theme" class="theme blue-theme"></a>
+                        <a href="javascript:;" data-theme="dark-darkblue-theme" class="theme darkblue-theme"></a>
+                        <a href="javascript:;" data-theme="dark-lightpink-theme" class="theme lightpink-theme"></a>
+
+                        <h6 class="border-bottom py-3">RTL Layout</h6>
+                        <label class="material-switch">
+                            <input type="checkbox" class="rtlSwitch">
+                            <span></span>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="backdrop-overlay hidden"></div>
+            </div>
+        </div>
+
+
+</div>
+
+    <div class="modal authentication-modal-dialog lock-overlay background-lock" id="authenticationModalCenter"
+         tabindex="-1" role="dialog" aria-labelledby="authenticationModalCenter" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="login d-flex align-items-center py-5">
+
+                                <!-- Login section-->
+                                <div class="container" id="login-section">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-xl-12 mx-auto">
+                                            <div class="text-center">
+                                                <h3 class="display-4">Sign In</h3>
+                                                <p class="text-white mb-2">Enter your email to get started</p>
+                                            </div>
+
+                                            <form id="login-form">
+                                                <div class="form-group mb-3">
+                                                    <input id="login-email" name="register_email" type="email" placeholder="Email address"
+                                                           required="" autofocus=""
+                                                           class="form-control rounded-pill border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <input id="login-pwd" name="register_pwd" type="password" placeholder="Password"
+                                                           required=""
+                                                           class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                                </div>
+
+                                                <div class="text-center pt-10 pb-4 text-sm">Not Registered?<a href="javascript:;" id="register-link" > Register</a></div>
+
+                                                <button type="button" id="sign-btn" class="btn btn-primary btn-lg btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+                                                    Sign In
+                                                </button>
+                                                <div class="text-center pt-10 pb-4 text-sm">- Or -</div>
+                                                <button type="button" id="google-sign-btn" class="btn btn-primary btn-lg btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+                                                    <span class="mdi mdi-google text-white"></span> Sign In
+                                                </button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container" hidden id="register-section">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-xl-12 mx-auto">
+                                            <div class="text-center">
+                                                <h3 class="display-4">Register</h3>
+                                                <p class="text-white mb-2">Chat today! Even without data.</p>
+                                            </div>
+                                            <form id="register-form">
+                                                <div class="form-group mb-3">
+                                                    <input id="register_email" name="register_email" type="email" placeholder="Email address"
+                                                           required="" autofocus=""
+                                                           class="form-control rounded-pill border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <input id="register_pwd" name="register_pwd" type="password" placeholder="Password"
+                                                           required=""
+                                                           class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                                </div>
+
+                                                <div class="form-group mb-3">
+                                                    <input id="register_re_pwd" name="register_re_pwd" type="password" placeholder="Confirm Password"
+                                                           required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                                    <input type="hidden" name="page" value="sessionMaker" />
+                                                </div>
+                                                <div class="text-center pt-10 pb-4 text-sm">Already a member? <a
+                                                        href="javascript:;" id="login-link" >Sign In</a></div>
+
+                                                <button type="button" id="register-btn" class="btn btn-primary btn-lg btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+                                                    Register
+                                                </button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-5 d-none d-md-flex">
+
+                            <img src="images/undraw_online_chat_d7ek.svg" alt="" class="img-fluid mb-3 d-none d-md-block">
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- Import and configure the Firebase SDK -->
+<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+<!-- If you do not want to serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+<script src="/__/firebase/7.6.0/firebase-app.js"></script>
+<script src="/__/firebase/7.6.0/firebase-auth.js"></script>
+<script src="/__/firebase/7.6.0/firebase-storage.js"></script>
+<script src="/__/firebase/7.6.0/firebase-messaging.js"></script>
+<script src="/__/firebase/7.6.0/firebase-database.js"></script>
+<script src="/__/firebase/7.6.0/firebase-performance.js"></script>
+<!--<script src="/__/firebase/init.js"></script>-->
+<script src="scripts/init.js"></script>
+    <!--jQuery-->
+    <script src="styles/vendors/jquery/jquery-3.4.1.min.js"></script>
+    <!--Izitoast-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+
+    <script src="styles/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- emoji-picker -->
+    <script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/config.js"></script>
+    <script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/util.js"></script>
+    <script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/jquery.emojiarea.js"></script>
+    <script type="text/javascript" src="//onesignal.github.io/emoji-picker/lib/js/emoji-picker.js"></script>
+    <!-- chat_realtime -->
+
+
+    <script src="styles/vendors/material-floating-button/dist/mfb.min.js"></script>
+    <script src="styles/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="styles/vendors/OwlCarousel2/owl.carousel.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
