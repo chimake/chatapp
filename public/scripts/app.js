@@ -256,6 +256,19 @@ $(document).ready(function () {
     $('body').removeClass(themes);
     $('body').addClass($(this).attr('data-theme'));
   });
+  
+  $(".iconbox-light-mode").click(function () {
+    var bodyVal = $('body');
+    if (bodyVal.hasClass('dark-green-theme'))
+    {
+        $('body').removeClass(themes);
+        $('body').addClass('light-green-theme');
+    }else{
+        $('body').removeClass(themes);
+        $('body').addClass('dark-green-theme');
+    }
+
+  });
 
   //RTL Layout
   $(".rtlSwitch").change(function () {

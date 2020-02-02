@@ -70,7 +70,7 @@ function fetchChats(){
  var uid = getUid();
   firebase.database().ref('messages').orderByChild("time").on('value',function(snapshot) {
     //Clears the chat list and update again to refresh for new messages
-    chatList.html("");
+    //chatList.html("");
     snapshot.forEach(function(childSnapshot) {
     var key = childSnapshot.key.split("_",2)
      var value = childSnapshot.val()
