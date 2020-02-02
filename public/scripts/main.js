@@ -402,7 +402,10 @@ function authStateObserver(user) {
           title: 'Attention',
           message: 'Please wait...',
           position: 'center',
-          timeout:100000,
+          overlay: true,
+          displayMode: 'once',
+          timeout:7000,
+
       });
       $('#authenticationModalCenter').modal('hide');
     // Get the signed-in user's profile pic and name.
@@ -462,13 +465,13 @@ var RECIEVED_MESSAGE_TEMPLATE = `<div class="ca-send">
                                                         </div>
                                                     </div>
                                                    
-                                                    <div class="user-avatar user-avatar-sm user-avatar-rounded hideSender">
+                                                    <div class="user-avatar user-avatar-sm user-avatar-rounded ">
                                                         <img src="" class="pic" alt="">
                                                     </div>
                                                 </div>`;
 
 var SENT_MESSAGE_TEMPLATE = `<div class="ca-received">
-    <div class="user-avatar user-avatar-sm user-avatar-rounded online">
+    <div class="user-avatar user-avatar-sm user-avatar-rounded hideSender">
         <img src="" class="pic" alt="">
     </div>
     <div class="ca-received__msg-group">
@@ -518,10 +521,10 @@ let areaSwapped = false;
 function createAndInsertMessage(id, timestamp, sender) {
   var container = document.createElement('div');
     if (getUid() === sender){
-        container.innerHTML = SENT_MESSAGE_TEMPLATE;
+        container.innerHTML =  RECIEVED_MESSAGE_TEMPLATE;
 
     }else{
-        container.innerHTML = RECIEVED_MESSAGE_TEMPLATE;
+        container.innerHTML = SENT_MESSAGE_TEMPLATE;
     }
 
 
@@ -763,6 +766,8 @@ var userPicElement = $(".display_pic");
 var userNameElement = $('.user_name');
 var mainContainer = $("#main-container");
 var googleSignInButtonElement = $('#google-sign-btn');
+var registerBtn = $("#register-btn");
+var emailPasswordBtn = $("#sign-btn");
 var registerTriggerLink = $("#register-link");
 var loginTriggerLink = $("#login-link");
 var loginSection = $("#login-section");
@@ -775,6 +780,7 @@ var msgBtn = $("#msg-btn");
 var messageArea = $("#message-area");
 var streamsElement = document.getElementById('streams');
 var signOutButtonElement = $('#sign-out');
+
 var signInSnackbarElement = document.getElementById('must-signin-snackbar');
 
 // Saves message on form submit.
@@ -824,6 +830,126 @@ mediaCaptureElement.change(function () {
 });
 
 
+//Email and password registeration
+registerBtn.click(function () {
+    var userRegEmail = $("#register_email").val();
+    var userPassword = $("#register_pwd").val();
+    var confirmPassword = $("#register_re_pwd").val();
+    if (userRegEmail.length < 4)
+    {
+        iziToast.error({
+            title: "Error",
+            message: "Please enter a valid email",
+            position: 'center',
+            overlay: true,
+            displayMode: 'once',
+        });
+    }
+
+    if (userPassword.length < 4 )
+    {
+        iziToast.error({
+            title: "Error",
+            message: "Please enter a valid passsword",
+            position: 'center',
+            overlay: true,
+            displayMode: 'once',
+        });
+    }
+    if (userPassword !== confirmPassword)
+    {
+        iziToast.error({
+            title: "Error",
+            message: "Passwords don't match",
+            position: 'center',
+            overlay: true,
+            displayMode: 'once',
+        });
+    }
+    firebase.auth().createUserWithEmailAndPassword(userRegEmail, userPassword).catch(function(error) {
+
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        if (errorCode == 'auth/weak-password') {
+            iziToast.error({
+                title: "Error",
+                message: "Weak password.",
+                position: 'center',
+                overlay: true,
+                displayMode: 'once',
+            });
+        } else {
+            iziToast.error({
+                title: "Error",
+                message: errorMessage,
+                position: 'center',
+                overlay: true,
+                displayMode: 'once',
+            });
+        }
+        console.log(error);
+
+
+    });
+});
+
+
+emailPasswordBtn.click(function () {
+    var userEmail = $("#login-email").val();
+    var userPassword = $("#login-pwd").val();
+
+    if (userEmail.length < 4)
+    {
+        iziToast.error({
+            title: "Error",
+            message: "Please enter a valid email",
+            position: 'center',
+            overlay: true,
+            displayMode: 'once',
+        });
+    }
+
+    if (userPassword.length < 4 )
+    {
+        iziToast.error({
+            title: "Error",
+            message: "Please enter a valid password",
+            position: 'center',
+            overlay: true,
+            displayMode: 'once',
+        });
+    }
+
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode === 'auth/wrong-password') {
+            iziToast.error({
+                title: "Error",
+                message: "Wrong password",
+                position: 'center',
+                overlay: true,
+                displayMode: 'once',
+            });
+        } else {
+            iziToast.error({
+                title: "Error",
+                message: errorMessage,
+                position: 'center',
+                overlay: true,
+                displayMode: 'once',
+                timeout:100000,
+            });
+
+        }
+        console.log(error);
+
+        // [END_EXCLUDE]
+    });
+});
 // initialize Firebase
 initFirebaseAuth();
 
