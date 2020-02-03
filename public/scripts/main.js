@@ -68,9 +68,10 @@ function loadUsers() {
 }
 function fetchChats(){
  var uid = getUid();
-  firebase.database().ref('messages').orderByChild("time").on('value',function(snapshot) {
+    firebase.database().ref('messages').on('value',function(snapshot) {
+
     //Clears the chat list and update again to refresh for new messages
-    //chatList.html("");
+    chatList.html("");
     snapshot.forEach(function(childSnapshot) {
     var key = childSnapshot.key.split("_",2)
      var value = childSnapshot.val()
@@ -103,6 +104,10 @@ function displayChats(details, message) {
   var chatHtml = "";
   if (details != null ) {
     details = Object.values(details)[0];
+    var date = new Date(message.time);
+    var diff = new Date() - message.time;
+      var seconds = Math.floor(diff / 1000);
+    //console.log(message.time.toDate());
 
      chatHtml = `
                     <li class="chat-list-item" onclick="loadMessages('${details.username}')">
@@ -111,7 +116,7 @@ function displayChats(details, message) {
                                 <div class="conversation__details">
                                     <div class="conversation__name">
                                         <div class="conversation__name--title">${details.name}</div>
-                                        <div class="conversation__time">${timeSince(new Date(message.time)) + ' ago'}</div>
+                                        <div class="conversation__time">${timeSince(message.time) + ' ago'}</div>
                                     </div>
                                     <div class="conversation__message">
                                         <div class="conversation__message-preview">
@@ -125,8 +130,6 @@ function displayChats(details, message) {
       `;
 
       //console.log(chatList.children);
-  }else {
-
   }
     return chatHtml;
 }
@@ -572,36 +575,32 @@ var timeSince = function(date) {
     date = new Date(date);
   }
 
-  var seconds = Math.floor((new Date() - date) / 1000);
+  var seconds = Math.floor((new Date() - date ) / 1000);
   var intervalType;
 
-  var interval = Math.floor(seconds / 31536000);
+  var interval = Math.floor(seconds / 31540000000);
   if (interval >= 1) {
     intervalType = 'year';
   } else {
-    interval = Math.floor(seconds / 2592000);
-    if (interval >= 1) {
-      intervalType = 'month';
-    } else {
-      interval = Math.floor(seconds / 86400);
+      interval = Math.floor(seconds / 86400000);
       if (interval >= 1) {
         intervalType = 'day';
       } else {
-        interval = Math.floor(seconds / 3600);
+        interval = Math.floor(seconds / 3600000);
         if (interval >= 1) {
           intervalType = "hour";
         } else {
-          interval = Math.floor(seconds / 60);
+          interval = Math.floor(seconds / 60000);
           if (interval >= 1) {
             intervalType = "minute";
           } else {
-            interval = seconds;
+              interval = Math.floor(seconds / 1000);
             intervalType = "second";
           }
         }
       }
     }
-  }
+
 
   if (interval > 1 || interval === 0) {
     intervalType += 's';
