@@ -161,7 +161,9 @@ function loadMessages(userId) {
         var id = us.val()
         var obj = Object.values(id)[0]
         DOM.messageAreaPic.src = obj.userImage;
+        DOM.messageAreaSidePic.src = obj.userImage;
         DOM.messageAreaName.innerHTML = obj.name;
+        DOM.messageAreaSideName.innerHTML = obj.name;
         DOM.messageAreaDetails.innerHTML = 'private';
       });
       if (userId < uid) {
@@ -193,16 +195,19 @@ function loadMessages(userId) {
           //display chat bot
             displayMessage(change.key, message.time, message.displayName,
               message.messageText, image, message.photoUrl, message.user);
+
         } else {
           var ref = firebase.database().ref('user/'+ message.displayName);
           ref.once('value').then(function (snapshot) {
              image = snapshot.child("userImage").val();
               displayMessage(change.key, message.time, message.displayName,
                   message.messageText, image, message.photoUrl, message.user);
+
           });
 
 
         }
+
         }
     });
   });
@@ -417,6 +422,7 @@ function authStateObserver(user) {
 
     // Set the user's profile pic and name.
     userPicElement.attr("src",profilePictureurl);
+    userModalPicElement.attr("src",profilePictureurl);
     userNameElement.html(userDisplayname);
 
     loadUsers();
@@ -454,7 +460,7 @@ function checkSignedInWithMessage() {
 
 
 // Template for messages.
-var RECIEVED_MESSAGE_TEMPLATE = `<div class="ca-send">
+var RECIEVED_MESSAGE_TEMPLATE = `<div class="ca-send msgBody">
                                                     <div class="ca-send__msg-group">
                                                         <div class="ca-send__msgwrapper">
                                                             
@@ -473,7 +479,7 @@ var RECIEVED_MESSAGE_TEMPLATE = `<div class="ca-send">
                                                     </div>
                                                 </div>`;
 
-var SENT_MESSAGE_TEMPLATE = `<div class="ca-received">
+var SENT_MESSAGE_TEMPLATE = `<div class="ca-received msgBody">
     <div class="user-avatar user-avatar-sm user-avatar-rounded hideSender">
         <img src="" class="pic" alt="">
     </div>
@@ -651,30 +657,32 @@ function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
           image.innerHTML = RECIEVED_IMAGE_MESSAGE_TEMPLATE;
       }
 
-
-
     let imageSrc = photoUrl + '&' + new Date().getTime();
-      // div.querySelector('.msgPic').setAttribute('src',imageSrc);
 
     messageElement.appendChild(image);
       messageElement.querySelector('.msgPic').setAttribute('src',imageSrc);
-      // console.log(messageElement.querySelector('.msgPic'));
   }
+    scrollBottom();
+
+    document.getElementById('messages').focus();
   // Show the card fading-in and scroll to view the new message.
   // setTimeout(function() {div.classList.add('visible')}, 1);
   // messageListElement.scrollTop = messageListElement.scrollHeight;
   // messageInputElement.focus();
 }
 
-// Enables or disables the submit button depending on the values of the input
-// fields.
-// function toggleButton() {
-//   if (messageInputElement.value) {
-//     submitButtonElement.removeAttribute('disabled');
-//   } else {
-//     submitButtonElement.setAttribute('disabled', 'true');
-//   }
-// }
+
+function scrollBottom() {
+
+    setTimeout(() => {
+        const cc = $('#messages');
+        const dd = cc[0].scrollHeight;
+        cc.animate({
+            scrollTop: dd
+        }, 500);
+    }, 1000);
+}
+
 let mClassList = (element) => {
 	return {
 		add: (className) => {
@@ -721,6 +729,8 @@ const DOM =  {
 	messageAreaPic: getById("pic", this.messageArea),
 	messageAreaNavbar: getById("navbar", this.messageArea),
 	messageAreaDetails: getById("details", this.messageAreaNavbar),
+	messageAreaSideName: getById("sideName"),
+	messageAreaSidePic: getById("sidePic"),
 	messageAreaOverlay: getByClass("overlay", this.messageArea)[0],
 	messageInput: getById("input"),
 	UsersList: getById("users-list"),
@@ -762,6 +772,7 @@ var imageButtonElement = $('#submitImage');
 var imageFormElement = document.getElementById('image-form');
 var mediaCaptureElement = $('#mediaCapture');
 var userPicElement = $(".display_pic");
+var userModalPicElement = $("#modal-profile-pic");
 var userNameElement = $('.user_name');
 var mainContainer = $("#main-container");
 var googleSignInButtonElement = $('#google-sign-btn');
@@ -779,12 +790,18 @@ var msgBtn = $("#msg-btn");
 var messageArea = $("#message-area");
 var streamsElement = document.getElementById('streams');
 var signOutButtonElement = $('#sign-out');
-
+var viewProfileModal = $("#viewProfileModal");
 var signInSnackbarElement = document.getElementById('must-signin-snackbar');
 
 // Saves message on form submit.
 //messageFormElement.addEventListener('submit', onMessageFormSubmit);
 
+
+viewProfileModal.on('show.bs.modal', function () {
+    $('body').addClass("viewProfile");
+}).on('hide.bs.modal', function () {
+    $('body').removeClass("viewProfile");
+});
 msgBtn.click(function () {
     onMessageFormSubmit();
 });

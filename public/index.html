@@ -49,7 +49,7 @@
 
         }
 
-
+        .viewProfile .modal-backdrop {background: #000000;}
         .dropdown {
             position: relative;
             display: inline-block;
@@ -324,227 +324,13 @@
 
                                         <div class="information-panel__body">
                                             <div class="userprofile-avatar">
-                                                <img class="img-fluid" src="assets/images/user/250/01.jpg" alt="">
+                                                <img class="img-fluid" id="sidePic" src="" alt="">
                                             </div>
 
                                             <div class="userprofile-name">
-                                                <h4>Jack P. Angulo</h4>
-                                                <span>Product Manager</span>
-                                                <div class="social-icon-box">
-                                                    <div class="social-icon">
-                                                        <i class="mdi mdi-facebook"></i>
-                                                    </div>
-                                                    <div class="social-icon">
-                                                        <i class="mdi mdi-linkedin"></i>
-                                                    </div>
-                                                    <div class="social-icon">
-                                                        <i class="mdi mdi-twitter"></i>
-                                                    </div>
-                                                    <div class="social-icon">
-                                                        <i class="mdi mdi-youtube"></i>
-                                                    </div>
-                                                </div>
+                                                <h4 id="sideName">Jack P. Angulo</h4>
                                             </div>
 
-                                            <hr>
-
-                                            <table class="table table-sm table-borderless user-table-info">
-                                                <tr>
-                                                    <td><i class="mdi mdi-cellphone-android"></i></td>
-                                                    <td>+91 99041-99041</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><i class="mdi mdi-web"></i></td>
-                                                    <td>www.jackangulo.com</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><i class="mdi mdi-map-marker"></i></td>
-                                                    <td>2519  Burnside Court, HORICON, WI, 53032</td>
-                                                </tr>
-                                            </table>
-
-                                            <hr>
-
-                                            <div class="accordion accordion-ungrouped mb-3" id="accordionExample">
-                                                <div class="card">
-                                                    <div class="card-header" id="headingOne">
-                                                        <div class="card-title" data-toggle="collapse" role="button"  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            <div class="acpanel__heading">
-                                                                <div class="acpanel__left">
-                                                                    <span><i class="mdi mdi-camera-outline"></i></span>
-                                                                    <span>Photos & Media</span>
-                                                                </div>
-                                                                <div class="acpanel__right">
-                                                                    <span class="badge badge-info">26</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <div class="owl-carousel">
-                                                                <div class="item">
-                                                                    <img class="img-fluid" src="assets/images/media/01.jpg" alt="">
-                                                                </div>
-                                                                <div class="item">
-                                                                    <img class="img-fluid" src="assets/images/media/02.jpg" alt="">
-                                                                </div>
-                                                                <div class="item">
-                                                                    <img class="img-fluid" src="assets/images/media/03.jpg" alt="">
-                                                                </div>
-                                                                <div class="item">
-                                                                    <img class="img-fluid" src="assets/images/media/04.jpg" alt="">
-                                                                </div>
-                                                                <div class="item">
-                                                                    <img class="img-fluid" src="assets/images/media/05.jpg" alt="">
-                                                                </div>
-                                                                <div class="item">
-                                                                    <img class="img-fluid" src="assets/images/media/06.jpg" alt="">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card">
-                                                    <div class="card-header" id="headingTwo">
-                                                        <div class="card-title collapsed d-flex justify-content-between align-items-center"  role="button" data-toggle="collapse" data-target="#collapseTwo"
-                                                             aria-expanded="false" aria-controls="collapseTwo">
-                                                            <div class="acpanel__heading">
-                                                                <div class="acpanel__left">
-                                                                    <span><i class="mdi mdi-file-document-outline"></i></span>
-                                                                    <span>Documents</span>
-                                                                </div>
-                                                                <div class="acpanel__right">
-                                                                    <span class="badge badge-info">16</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                                        <div class="card-body">
-                                                            <ul class="list-unstyled documentlist-wrapper">
-                                                                <li>
-                                                                    <div class="doclist">
-                                                                        <div class="docicon">
-                                                                            <img src="assets/images/svg/pdf.svg" alt="">
-                                                                        </div>
-                                                                        <div class="doctitle">
-                                                                            <div class="docname">example-file.pdf</div>
-                                                                            <div class="docsize">217kb</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="doclist">
-                                                                        <div class="docicon">
-                                                                            <img src="assets/images/svg/word.svg" alt="">
-                                                                        </div>
-                                                                        <div class="doctitle">
-                                                                            <div class="docname">example-file.docs</div>
-                                                                            <div class="docsize">217kb</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="doclist">
-                                                                        <div class="docicon">
-                                                                            <img src="assets/images/svg/excel.svg" alt="">
-                                                                        </div>
-                                                                        <div class="doctitle">
-                                                                            <div class="docname">example-file.xlxs</div>
-                                                                            <div class="docsize">217kb</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="doclist">
-                                                                        <div class="docicon">
-                                                                            <img src="assets/images/svg/powerpoint.svg" alt="">
-                                                                        </div>
-                                                                        <div class="doctitle">
-                                                                            <div class="docname">example-file.pptx</div>
-                                                                            <div class="docsize">217kb</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="doclistall">View All</div>
-                                                                </li>
-
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card">
-                                                    <div class="card-header" id="headingFour">
-                                                        <div class="card-title collapsed  d-flex justify-content-between align-items-center" role="button"  data-toggle="collapse" data-target="#collapseFour"
-                                                             aria-expanded="false" aria-controls="collapseFour">
-                                                            <div class="acpanel__heading">
-                                                                <div class="acpanel__left">
-                                                                    <span><i class="mdi mdi-settings-outline"></i></span>
-                                                                    <span>Settings</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-                                                        <div class="card-body">
-
-                                                            <ul class="list-unstyled">
-                                                                <li>
-                                                                    <div class="setting-list">
-                                                                        <div class="setting-list-name">Media Auto Download</div>
-                                                                        <div class="setting-list-switch">
-                                                                            <label class="material-switch">
-                                                                                <input type="checkbox">
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="setting-list">
-                                                                        <div class="setting-list-name">Mute Conversation</div>
-                                                                        <div class="setting-list-switch">
-                                                                            <label class="material-switch">
-                                                                                <input type="checkbox">
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="setting-list">
-                                                                        <div class="setting-list-name">Notifications</div>
-                                                                        <div class="setting-list-switch">
-                                                                            <label class="material-switch">
-                                                                                <input type="checkbox">
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="setting-list">
-                                                                        <div class="setting-list-name">Block</div>
-                                                                        <div class="setting-list-switch">
-                                                                            <label class="material-switch">
-                                                                                <input type="checkbox">
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -563,7 +349,7 @@
                                 <div class="ca-profile-thumb" style="background-image: url(images/media/07.jpg);">
 
                                     <div class="ca-profile-info">
-                                        <div class="ca-profile-pic"><img class="img-fluid" src="assets/images/user/500/09.jpg" alt=""></div>
+                                        <div class="ca-profile-pic"><img class="img-fluid" src="" alt=""></div>
                                     </div>
                                     <div class="ca-profile-actions">
                                         <div class="iconbox-group">
@@ -728,9 +514,9 @@
                             <div class="modal-body p-0">
                                 <div class="ca-profile-thumb" style="background-image: url(assets/images/media/07.jpg);">
                                     <div class="ca-profile-info">
-                                        <div class="ca-profile-pic"><img class="img-fluid" src="assets/images/user/500/01.jpg" alt=""></div>
+                                        <div class="ca-profile-pic"><img class="img-fluid" id="modal-profile-pic"  alt=""></div>
                                         <div class="ca-profile-title">
-                                            <h2 class="ca-profile-name">Earnest Clements</h2>
+                                            <h2 class="ca-profile-name user_name">Earnest Clements</h2>
                                         </div>
                                     </div>
                                     <div class="ca-profile-actions">
@@ -743,96 +529,7 @@
                                     <div class="ca-overlay"></div>
                                 </div>
 
-                                <div class="profile-settings-list">
-                                    <div class="setting-sunheading pl-2">Personal & Contact Information</div>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-gender-male-female"></i></div>
-                                                    <div class="ps-list__left--name">Gender</div>
-                                                </div>
-                                                <div class="ps-list__right">Female</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-cake"></i></div>
-                                                    <div class="ps-list__left--name">Birth date</div>
-                                                </div>
-                                                <div class="ps-list__right">20/12/2016</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-cellphone-android"></i></div>
-                                                    <div class="ps-list__left--name">Mobile number</div>
-                                                </div>
-                                                <div class="ps-list__right">+01 369 2015</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-email-outline"></i></div>
-                                                    <div class="ps-list__left--name">Email</div>
-                                                </div>
-                                                <div class="ps-list__right">earnest.clements@email.com</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-at"></i></div>
-                                                    <div class="ps-list__left--name">Website</div>
-                                                </div>
-                                                <div class="ps-list__right">www.earnestclements.com</div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="setting-sunheading pl-2 py-4">Social Network</div>
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-facebook"></i></div>
-                                                    <div class="ps-list__left--name">Facebook</div>
-                                                </div>
-                                                <div class="ps-list__right">earnest.clements</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-instagram"></i></div>
-                                                    <div class="ps-list__left--name">Instagram</div>
-                                                </div>
-                                                <div class="ps-list__right">earnest_clements</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-snapchat"></i></div>
-                                                    <div class="ps-list__left--name">Snapchat</div>
-                                                </div>
-                                                <div class="ps-list__right">earnestclements212</div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="ps-list">
-                                                <div class="ps-list__left">
-                                                    <div class="ps-list__left--icon"><i class="mdi mdi-twitter"></i></div>
-                                                    <div class="ps-list__left--name">Twitter</div>
-                                                </div>
-                                                <div class="ps-list__right">iamearnest</div>
-                                            </div>
-                                        </li>
 
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
