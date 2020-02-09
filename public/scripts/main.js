@@ -188,7 +188,7 @@ function loadMessages(userId) {
         var message = change.val();
         var msgHTML = "";
           var chatTime = parseInt(message.time, 10);
-        var timeStamp = timeSince(new Date(chatTime));;
+        var timeStamp = timeSince(new Date(chatTime));
 
         //console.log("Message: "+message.displayName);
         if (message.displayName === '+LiFE') {
@@ -205,11 +205,14 @@ function loadMessages(userId) {
 
           });
 
-
         }
 
         }
     });
+    // scrollBottom();
+    //   const cc = $('.chatstyle-01')[0].scrollHeight;
+    //   //const scroll = $("#"+cc);
+    //   console.log("Scroll height: "+cc);
   });
 }
 
@@ -265,11 +268,14 @@ function saveMessage(messageText) {
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
 function saveImageMessage(file) {
+
   // 1 - We add a message with a loading icon that will get updated with the shared image.
   var senderId = sender.val();
   var uid = getUid();
+    console.log("Sender: "+senderId);
   //Check if sender is stream else create a node between one-to-one users
-  if (senderId == 'undefined' ) {
+  if (senderId == '' ) {
+      console.log("Stream");
     return firebase.database().ref('messages').child('streams_public').push({
       displayName: getUserName(),
       photoUrl: LOADING_IMAGE_URL,
@@ -278,6 +284,7 @@ function saveImageMessage(file) {
     }).then(function(messageRef) {
       // 2 - Upload the image to Cloud Storage.
       var filePath = firebase.auth().currentUser.uid + '/' + messageRef.id + '/' + file.name;
+        //console.log("File path : "+file.name);
       return firebase.storage().ref(filePath).put(file).then(function(fileSnapshot) {
         // 3 - Generate a public URL for the file.
         return fileSnapshot.ref.getDownloadURL().then((url) => {
@@ -372,6 +379,7 @@ function onMediaFileSelected(event) {
   event.preventDefault();
   var file = event.target.files[0];
 
+
   // Clear the selection in the file picker input.
   imageFormElement.reset();
 
@@ -381,11 +389,12 @@ function onMediaFileSelected(event) {
       message: 'You can only share images',
       timeout: 2000
     };
-    signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+    //signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
     return;
   }
   // Check if the user is signed-in
   if (checkSignedInWithMessage()) {
+      //console.log("File: "+JSON.stringify(file));
     saveImageMessage(file);
   }
 }
@@ -428,6 +437,8 @@ function authStateObserver(user) {
     loadUsers();
 
     loadMessages();
+
+    scrollBottom();
     // We save the Firebase Messaging Device token and enable notifications.
     saveMessagingDeviceToken();
       mainContainer.removeAttr("hidden");
@@ -543,6 +554,7 @@ function createAndInsertMessage(id, timestamp, sender) {
   //Link user name to chat area
     $(".hideName").click(function () {
         loadMessages(sender);
+        scrollBottom();
     });
 
   div.setAttribute('timestamp', timestamp);
@@ -662,9 +674,22 @@ function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
     messageElement.appendChild(image);
       messageElement.querySelector('.msgPic').setAttribute('src',imageSrc);
   }
-    scrollBottom();
 
-    document.getElementById('messages').focus();
+
+    //scrollBottom();
+
+    document.getElementById('message').focus();
+    // var height = 0;
+    // $('.chatstyle-01 div').each(function(i, value){
+    //     height += parseInt($(this).height());
+    // });
+    //
+    // height += '';
+    // console.log("Height: "+height);
+    //
+    // $('.chatstyle-01').animate({scrollTop: height});
+    // $('#messages').animate({
+    //     scrollTop: $('#messages')[0].scrollHeight}, "slow");
   // Show the card fading-in and scroll to view the new message.
   // setTimeout(function() {div.classList.add('visible')}, 1);
   // messageListElement.scrollTop = messageListElement.scrollHeight;
@@ -768,9 +793,9 @@ var messageListElement = $('#messages');
 //var messageFormElement = document.getElementById('message-form');
 var messageInputElement = $('#message');
 var submitButtonElement = document.getElementById('submit');
-var imageButtonElement = $('#submitImage');
+var imageButtonElement = document.getElementById('submitImage');
 var imageFormElement = document.getElementById('image-form');
-var mediaCaptureElement = $('#mediaCapture');
+var mediaCaptureElement = document.getElementById('mediaCapture');
 var userPicElement = $(".display_pic");
 var userModalPicElement = $("#modal-profile-pic");
 var userNameElement = $('.user_name');
@@ -836,14 +861,19 @@ messageInputElement.keyup(function (event) {
 // messageInputElement.addEventListener('change', toggleButton);
 
 // Events for image upload.
-imageButtonElement.click(function (e) {
+imageButtonElement.addEventListener('click', function(e) {
     e.preventDefault();
     mediaCaptureElement.click();
 });
+mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+// imageButtonElement.click(function (e) {
+//     e.preventDefault();
+//     mediaCaptureElement.click();
+// });
 
-mediaCaptureElement.change(function () {
-    onMediaFileSelected();
-});
+// mediaCaptureElement.change(function () {
+//     onMediaFileSelected();
+// });
 
 
 //Email and password registeration

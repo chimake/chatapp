@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="styles/vendors/OwlCarousel2/owl.carousel.css">
     <link rel="stylesheet" href="styles/vendors/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.11/uploadfile.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/app.css">
 
     <link rel="stylesheet" href="styles/theme/default.css">
@@ -215,6 +216,14 @@
                                     </div>
                                 </div>
 
+
+                                <div class="nav-style-1">
+                                    <center><div  class="w3-margin"  id="EB6">
+                                    </div></center>
+
+                                    
+                                </div>
+
                                 <ul id="mfbMenu" class="mfb-component--br mfb-slidein" data-mfb-toggle="click">
                                     <li class="mfb-component__wrap">
                                         <a href="#" class="mfb-component__button--main">
@@ -299,8 +308,13 @@
                                                 <div class="composer__middle">
                                                     <textarea class="form-control" id="message" rows="1" placeholder="Type a message..."></textarea>
 
-                                                    <div class="composer__middle--microphone">
-                                                        <i class="mdi mdi-microphone"></i>
+
+
+                                                    <div class="composer__middle--photo">
+                                                        <form id="image-form" action="#">
+                                                        <input id="mediaCapture" type="file" accept="image/*" capture="camera" style="display: none">
+                                                        <i class="mdi mdi-picture-in-picture-bottom-right"  id="submitImage"></i>
+                                                        </form>
                                                     </div>
 
                                                 </div>
@@ -658,6 +672,7 @@
     <script src="styles/vendors/jquery/jquery-3.4.1.min.js"></script>
     <!--Izitoast-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://pluslife.app/adserver/index.php/campaign_delivery/deliver_banner_js/b4cd1e69d2e6732d19f69a9f/box"></script>
 
     <script src="styles/vendors/bootstrap/bootstrap.bundle.min.js"></script>
 
