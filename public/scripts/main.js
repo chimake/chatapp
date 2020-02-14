@@ -71,7 +71,7 @@ function fetchChats(){
     firebase.database().ref('messages').on('value',function(snapshot) {
 
     //Clears the chat list and update again to refresh for new messages
-    chatList.html("");
+        chatList.html("");
     snapshot.forEach(function(childSnapshot) {
     var key = childSnapshot.key.split("_",2)
      var value = childSnapshot.val()
@@ -104,10 +104,7 @@ function displayChats(details, message) {
   var chatHtml = "";
   if (details != null ) {
     details = Object.values(details)[0];
-    var date = new Date(message.time);
-    var diff = new Date() - message.time;
-      var seconds = Math.floor(diff / 1000);
-    //console.log(message.time.toDate());
+
 
      chatHtml = `
                     <li class="chat-list-item" onclick="loadMessages('${details.username}')">
@@ -149,11 +146,12 @@ DOM.usersDisplay.innerHTML += `
 }
 // Loads chat messages history and listens for upcoming ones.
 function loadMessages(userId) {
+    messageListElement.html("");
     sender.val(userId);
 
   var uid = getUid();
   fetchChats();
-  messageListElement.html("");
+
 
    //console.log(uid) 
     if (userId != undefined) {
@@ -187,8 +185,7 @@ function loadMessages(userId) {
        var image = 'images/pluslife.png';
         var message = change.val();
         var msgHTML = "";
-          var chatTime = parseInt(message.time, 10);
-        var timeStamp = timeSince(new Date(chatTime));
+
 
         //console.log("Message: "+message.displayName);
         if (message.displayName === '+LiFE') {
@@ -210,7 +207,10 @@ function loadMessages(userId) {
         }
     });
     // scrollBottom();
-    //   const cc = $('.chatstyle-01')[0].scrollHeight;
+      const cc = $('#messages').children().last().attr('id');
+      $('messages').animate({
+          scrollTop: $("#"+cc).offset().top
+      }, 2000);
     //   //const scroll = $("#"+cc);
     //   console.log("Scroll height: "+cc);
   });
@@ -438,7 +438,7 @@ function authStateObserver(user) {
 
     loadMessages();
 
-    scrollBottom();
+
     // We save the Firebase Messaging Device token and enable notifications.
     saveMessagingDeviceToken();
       mainContainer.removeAttr("hidden");
@@ -554,7 +554,6 @@ function createAndInsertMessage(id, timestamp, sender) {
   //Link user name to chat area
     $(".hideName").click(function () {
         loadMessages(sender);
-        scrollBottom();
     });
 
   div.setAttribute('timestamp', timestamp);
@@ -593,38 +592,12 @@ var timeSince = function(date) {
     date = new Date(date);
   }
 
-  var seconds = Math.floor((new Date() - date ) / 1000);
-  var intervalType;
+    let endTime = moment();
+    let startTime = moment(date);
 
-  var interval = Math.floor(seconds / 31540000000);
-  if (interval >= 1) {
-    intervalType = 'year';
-  } else {
-      interval = Math.floor(seconds / 86400000);
-      if (interval >= 1) {
-        intervalType = 'day';
-      } else {
-        interval = Math.floor(seconds / 3600000);
-        if (interval >= 1) {
-          intervalType = "hour";
-        } else {
-          interval = Math.floor(seconds / 60000);
-          if (interval >= 1) {
-            intervalType = "minute";
-          } else {
-              interval = Math.floor(seconds / 1000);
-            intervalType = "second";
-          }
-        }
-      }
-    }
+    let duration = moment.duration(endTime.diff(startTime)).humanize();
 
-
-  if (interval > 1 || interval === 0) {
-    intervalType += 's';
-  }
-
-  return interval + ' ' + intervalType;
+  return duration;
 };
 // Displays a Message in the UI.
 function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
@@ -648,8 +621,7 @@ function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
   var messageElement = div.querySelector('.message');
   var time = div.getAttribute('timestamp');
 
-  time = parseInt(time, 10)
-  timestamp = timeSince(new Date(time));
+  timestamp = timeSince(time);
 
 
   div.querySelector('.msgTime').textContent = timestamp;
@@ -677,23 +649,9 @@ function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
 
 
     //scrollBottom();
-
+    messageElement.scrollTop = messageElement.scrollHeight;
     document.getElementById('message').focus();
-    // var height = 0;
-    // $('.chatstyle-01 div').each(function(i, value){
-    //     height += parseInt($(this).height());
-    // });
-    //
-    // height += '';
-    // console.log("Height: "+height);
-    //
-    // $('.chatstyle-01').animate({scrollTop: height});
-    // $('#messages').animate({
-    //     scrollTop: $('#messages')[0].scrollHeight}, "slow");
-  // Show the card fading-in and scroll to view the new message.
-  // setTimeout(function() {div.classList.add('visible')}, 1);
-  // messageListElement.scrollTop = messageListElement.scrollHeight;
-  // messageInputElement.focus();
+
 }
 
 
@@ -790,6 +748,7 @@ window.addEventListener("resize", e => {
 
 // Shortcuts to DOM Elements.
 var messageListElement = $('#messages');
+var messageElement = document.getElementById('messages');
 //var messageFormElement = document.getElementById('message-form');
 var messageInputElement = $('#message');
 var submitButtonElement = document.getElementById('submit');

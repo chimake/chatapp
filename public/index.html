@@ -300,9 +300,7 @@
                                         <div class="conversation-panel__footer" id="input-area">
                                             <div class="composer">
                                                 <div class="composer__left">
-                                                    <div class="composer__left--emoticon">
-                                                        <i class="mdi mdi-emoticon-outline"></i>
-                                                    </div>
+
                                                 </div>
 
                                                 <div class="composer__middle">
@@ -312,15 +310,22 @@
 
                                                     <div class="composer__middle--photo">
                                                         <form id="image-form" action="#">
-                                                        <input id="mediaCapture" type="file" accept="image/*" capture="camera" style="display: none">
-                                                        <i class="mdi mdi-picture-in-picture-bottom-right"  id="submitImage"></i>
+                                                            <input id="mediaCapture" type="file" accept="image/*" capture="camera" style="display: none">
+                                                            <i class="mdi mdi-picture-in-picture-bottom-right"  id="submitImage"></i>
                                                         </form>
+                                                    </div>
+
+                                                    <div class="composer__middle--microphone">
+                                                        <i class="mdi mdi-microphone"></i>
                                                     </div>
 
                                                 </div>
 
-                                                <div class="composer__right">
-                                                    <div class="composer__right--send" id="msg-btn">
+                                                <div class="composer__right" id="msg-btn">
+                                                    <div class="composer__right--microphone" >
+                                                        <i class="mdi mdi-send"></i>
+                                                    </div>
+                                                    <div class="composer__right--send">
                                                         <i class="mdi mdi-send"></i>
                                                     </div>
                                                 </div>
@@ -342,7 +347,7 @@
                                             </div>
 
                                             <div class="userprofile-name">
-                                                <h4 id="sideName">Jack P. Angulo</h4>
+                                                <h4 id="sideName"></h4>
                                             </div>
 
                                         </div>
@@ -687,7 +692,11 @@
     <script src="styles/vendors/material-floating-button/dist/mfb.min.js"></script>
     <script src="styles/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="styles/vendors/OwlCarousel2/owl.carousel.min.js"></script>
+    <script src="scripts/functions/node_modules/moment/moment.js"></script>
+    <script src="scripts/moment-precise-range.js"></script>
     <script src="scripts/app.js"></script>
+    <script src="scripts/functions/index.js"></script>
     <script src="scripts/main.js"></script>
+
 </body>
 </html>

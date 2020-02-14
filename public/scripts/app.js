@@ -186,9 +186,17 @@ $(document).ready(function () {
     function resize() {
       if ($window.width() < 992) {
         $(".conversation, .calllist, .contactlist").removeClass("active");
-        $("#personal-chat .conversation").on('click', function () {
+        $("#personal-chat").on('click', function () {
           $(this).addClass("active");
           $(".ca-content__chatstab--personal").show();
+          $(".ca-content-wrapper").addClass("open");
+        });
+        $(".conversation").on('click', function () {
+          //$(this).addClass("active");
+          $(".ca-content-wrapper").addClass("open");
+        });
+        $("#caDiscoverTab").on('click', function () {
+          //$(this).addClass("active");
           $(".ca-content-wrapper").addClass("open");
         });
         $("#groups-chat .conversation").on('click', function () {
