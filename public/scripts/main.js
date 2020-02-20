@@ -113,7 +113,7 @@ function displayChats(details, message) {
                                 <div class="conversation__details">
                                     <div class="conversation__name">
                                         <div class="conversation__name--title">${details.name}</div>
-                                        <div class="conversation__time">${timeSince(message.time) + ' ago'}</div>
+                                        <div class="conversation__time">${timeSince(message.timestp) + ' ago'}</div>
                                     </div>
                                     <div class="conversation__message">
                                         <div class="conversation__message-preview">
@@ -146,6 +146,7 @@ DOM.usersDisplay.innerHTML += `
 }
 // Loads chat messages history and listens for upcoming ones.
 function loadMessages(userId) {
+    console.log("Time Stp: "+timeStp());
     messageListElement.html("");
     sender.val(userId);
 
@@ -190,14 +191,14 @@ function loadMessages(userId) {
         //console.log("Message: "+message.displayName);
         if (message.displayName === '+LiFE') {
           //display chat bot
-            displayMessage(change.key, message.time, message.displayName,
+            displayMessage(change.key, message.timestp, message.displayName,
               message.messageText, image, message.photoUrl, message.user);
 
         } else {
           var ref = firebase.database().ref('user/'+ message.displayName);
           ref.once('value').then(function (snapshot) {
              image = snapshot.child("userImage").val();
-              displayMessage(change.key, message.time, message.displayName,
+              displayMessage(change.key, message.timestp, message.displayName,
                   message.messageText, image, message.photoUrl, message.user);
 
           });
@@ -231,7 +232,8 @@ function saveMessage(messageText) {
                 displayName: getUserName(),
                 messageText: messageText,
                 user: uid,
-                time: firebase.database.ServerValue.TIMESTAMP
+                time: firebase.database.ServerValue.TIMESTAMP,
+                timestp:timeStp()
             }).catch(function(error) {
                 console.error('Error writing new message to database', error);
             });
@@ -241,7 +243,8 @@ function saveMessage(messageText) {
                 displayName: getUserName(),
                 messageText: messageText,
                 user: uid,
-                time: firebase.database.ServerValue.TIMESTAMP
+                time: firebase.database.ServerValue.TIMESTAMP,
+                timestp:timeStp()
             }).catch(function(error) {
                 console.error('Error writing new message to database', error);
             });
@@ -249,7 +252,8 @@ function saveMessage(messageText) {
                 displayName: getUserName(),
                 messageText: messageText,
                 user: uid,
-                time: firebase.database.ServerValue.TIMESTAMP
+                time: firebase.database.ServerValue.TIMESTAMP,
+                timestp: timeStp()
             }).catch(function(error) {
                 console.error('Error writing new message to database', error);
             });
@@ -280,7 +284,8 @@ function saveImageMessage(file) {
       displayName: getUserName(),
       photoUrl: LOADING_IMAGE_URL,
       user: uid,
-      time: firebase.database.ServerValue.TIMESTAMP
+      time: firebase.database.ServerValue.TIMESTAMP,
+        timestp:timeStp()
     }).then(function(messageRef) {
       // 2 - Upload the image to Cloud Storage.
       var filePath = firebase.auth().currentUser.uid + '/' + messageRef.id + '/' + file.name;
@@ -304,7 +309,8 @@ function saveImageMessage(file) {
         displayName: getUserName(),
         photoUrl: LOADING_IMAGE_URL,
         user: uid,
-        time: firebase.database.ServerValue.TIMESTAMP
+        time: firebase.database.ServerValue.TIMESTAMP,
+          timestp:timeStp()
       }).then(function(messageRef) {
         // 2 - Upload the image to Cloud Storage.
         var filePath = firebase.auth().currentUser.uid + '/' + messageRef.id + '/' + file.name;
@@ -326,7 +332,8 @@ function saveImageMessage(file) {
         displayName: getUserName(),
         photoUrl: LOADING_IMAGE_URL,
         user: uid,
-        time: firebase.database.ServerValue.TIMESTAMP
+        time: firebase.database.ServerValue.TIMESTAMP,
+          timestp:timeStp()
       }).then(function(messageRef) {
         // 2 - Upload the image to Cloud Storage.
         var filePath = firebase.auth().currentUser.uid + '/' + messageRef.id + '/' + file.name;
@@ -598,6 +605,12 @@ var timeSince = function(date) {
     let duration = moment.duration(endTime.diff(startTime)).humanize();
 
   return duration;
+};
+
+var timeStp = function () {
+    var now = moment();
+    now.defaultFormat = "DD.MM.YYYY HH:mm";
+    return now.toDate();
 };
 // Displays a Message in the UI.
 function displayMessage(id, timestamp, name, text, picUrl, photoUrl, sender) {
